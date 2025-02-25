@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     ]);
 
     // Gera um token único para verificação do e-mail
-    $token = bin2hex(random_bytes(32));
+    $token = $cpf . bin2hex(random_bytes(32));
     // Define o prazo de expiração para 10 minutos a partir de agora
     $expira_em = (new DateTime('+10 minutes'))->format('Y-m-d H:i:s');
 

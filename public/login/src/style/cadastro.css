@@ -1,36 +1,39 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 *{
     margin: 0;
     color: white;
-    font-family: sans-serif;
+    font-family: "Roboto", serif;
 }
 
 body{
-    background-color: #d6d6d6;
+background-color: rgb(18, 24, 40);
 }
 
+
 .main{
-    width: 50%;
+    width: 30%;
     margin: auto;
-    margin-top: 5%;
-    background-color: white;
+    margin-top: 1%;
+    background-color: rgb(22, 24, 36);
     border-radius: 20px;
-    box-shadow: 0px 9px 5px 0px rgb(171 171 171 / 75%);
-}
+}   
 
 .flex{
     display: flex;
 }
 
-.ld1 img{
-    border-bottom-left-radius: 10px;
-    border-top-left-radius: 10px;
-    height: 100%;
-    object-fit: cover;
-}
-
 .ld2{
     padding: 10px;
-    width: 100%;
+}
+
+.ld2 h1{
+    font-size: 35px;
+    width: 85%;
+    margin: auto;
+    margin-bottom: 10px;
 }
 
 .dados{
@@ -38,13 +41,42 @@ body{
     flex-direction: column;
 }
 
-.dados input{
-    color: black;
+.dados label{
+    padding-bottom: 10px;
+    font-weight: bolder;
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
 }
 
-label{
-color: black;
-font-size: 20px;
+.dados input{
+    width: 80%;
+    margin: 0 auto;
+    padding: 12px;
+    border-radius: 5px;
+    background-color: #2e3143;
+    border: solid 1px rgb(159, 159, 159);
+    outline-color: rgba(255, 0, 0, 0.324);
+    margin-bottom: 20px;
+
+}
+
+.dados select{
+   width: 85%;
+   margin: auto;
+   outline: none;
+   background-color: #2e3143;
+   padding: 10px;
+   font-size: 15px;
+   border-radius: 5px;
+   margin-bottom: 10px;
+}
+
+.dados input::placeholder{
+    color: white;
+    font-size: 15px;
+    padding-left: 10px;
 }
 
 .dados_pix{
@@ -61,5 +93,47 @@ color: black;
 }
 
 .txt{
-    top: 10px;
+    position: absolute;
+    width: 100%;
+    top: 30%;
+}
+
+.txt h1{
+    font-size: 40px;
+    color: white;
+    text-align: center;
+}
+
+.genero{
+    width: 80%;
+    margin: 0 auto;
+}
+
+.genero label{
+    width: 100%;
+}
+
+#feminino{
+    border: solid 1px white;
+}
+
+.checkbox{
+    display: flex;
+    gap: 10px;
+}
+
+.dados button{
+    width: 85%;
+   margin: auto;
+   outline: none;
+   background-color: rgb(1, 213, 1);
+   padding: 10px;
+   font-size: 15px;
+   border-radius: 5px; 
+   cursor: pointer;
+   border: none;
+}
+
+.dados button:hover{
+    background-color: rgb(1, 134, 1);
 }
