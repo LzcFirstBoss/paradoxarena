@@ -1,8 +1,5 @@
 <?php
-require '../../composer/dontenv/vendor/autoload.php'; //Autoload Dotenv
-
-
-use Dotenv\Dotenv;
+require_once '../../config/env/env.php';
 
 class Database {
     private $host;
@@ -13,15 +10,12 @@ class Database {
     private $pdo;
 
     public function __construct() {
-        // Carrega as variáveis de ambiente do arquivo .env na raiz do projeto
-        $dotenv = Dotenv::createImmutable(__DIR__ . '/../..');
-        $dotenv->load();
-
-        $this->host = $_ENV['DB_HOST'];
-        $this->port = $_ENV['DB_PORT'];
-        $this->dbname = $_ENV['DB_DATABASE'];
-        $this->username = $_ENV['DB_USERNAME'];
-        $this->password = $_ENV['DB_PASSWORD'];
+        // As variáveis de ambiente já foram carregadas pelo config/env.php
+        $this->host = getenv('DB_HOST');
+        $this->port = getenv('DB_PORT');
+        $this->dbname = getenv('DB_DATABASE');
+        $this->username = getenv('DB_USERNAME');
+        $this->password = getenv('DB_PASSWORD');
     }
 
     public function connect() {
