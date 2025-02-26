@@ -45,10 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $dataFormatada = formatarDataNascimento($data_nascimento);
     $genero = $_POST['genero'];
     $chave = trim($_POST['chave']);
-    $tipo_de_chave = trim($_POST['tipode_de_chave']);
 
     // Verifica se todos os campos obrigatórios foram preenchidos
-    if (!$nome_completo || !$email || !$nickname || !$cpf || !$senha || !$confirmar_senha || !$data_nascimento || !$genero || !$chave || !$tipo_de_chave) {
+    if (!$nome_completo || !$email || !$nickname || !$cpf || !$senha || !$confirmar_senha || !$data_nascimento || !$genero || !$chave) {
         die("Erro: Todos os campos obrigatórios devem ser preenchidos.");
     }
 
@@ -107,11 +106,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_id = $pdo->lastInsertId();
 
     // Insere a chave de pagamento (Pix) na tabela correspondente
-    $stmt = $pdo->prepare("INSERT INTO chaves_de_pagamento (chave, tipode_de_chave, user_id) 
-                           VALUES (:chave, :tipode_de_chave, :user_id)");
+    $stmt = $pdo->prepare("INSERT INTO chaves_de_pagamento (chave,  user_id) 
+                           VALUES (:chave,   :user_id)");
     $stmt->execute([
         'chave'           => $chave,
-        'tipode_de_chave' => $tipo_de_chave,
         'user_id'         => $user_id
     ]);
 

@@ -31,7 +31,7 @@ function enviarEmailVerificacao($email, $token, $usuarionome) {
         $mail->Subject = 'Confirmação de Cadastro';
         
         // Cria o link de verificação (ajuste o domínio conforme seu ambiente)
-        $link = "https://seusite.com/verificar.php?token=" . $token;
+        $link = "https://1270-143-202-224-19.ngrok-free.app/apostasonline/controllers/auth/validar_email.php?token=" . $token;
         $mail->Body = '<!DOCTYPE html>
     <html lang="pt">
     <head>
@@ -124,7 +124,7 @@ function enviarEmailVerificacao($email, $token, $usuarionome) {
                 <h2>Olá, '. $usuarionome .' </h2>
                 <p>Bem-vindo(a) à Paradox Arena! Seu cadastro foi realizado com sucesso. Para começar a aproveitar todos os nossos recursos, é necessário ativar sua conta.</p>
                 <div class="cta">
-                    <a href="https://seusite.com/ativar_conta.php?token=<?php echo $activation_token; ?>">Ativar Minha Conta</a>
+                    <a href="'.$link.'" >Ativar Minha Conta</a>
                 </div>
                 <p>Se você não solicitou este cadastro, por favor ignore este e-mail.</p>
             </div>
