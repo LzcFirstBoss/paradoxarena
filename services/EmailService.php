@@ -19,6 +19,7 @@ class EmailService {
         $this->mailer->isSMTP();
         $this->mailer->Host       = getenv('SMTP_HOST');
         $this->mailer->SMTPAuth   = true;
+        $this->mailer->CharSet    = "UTF-8";
         $this->mailer->Username   = getenv('SMTP_USER');
         $this->mailer->Password   = getenv('SMTP_PASS');
         $this->mailer->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;

@@ -1,27 +1,29 @@
 <?php
-// controllers/AuthController.php
+// controllers/Auth/CadastroController.php
 
-// Inclua o model e demais dependências se necessário
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../models/user.php';
-require_once __DIR__ . '/../services/EmailService.php';
+// Inclua o model e demais dependências
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../models/auth/user.php';
+require_once __DIR__ . '/../../services/EmailService.php';
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
-class AuthController {
-
+class CadastroController {
     // Exibe o formulário de cadastro (view)
     public function exibirCadastro() {
-        require_once __DIR__ . '/../views/cadastro.php';
+        require_once __DIR__ . '/../../views/auth/cadastro.php';
     }
     
     // Processa o cadastro de usuário (ação para requisição POST)
     public function cadastrarUsuario() {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: /cadastro');
+            header('Location: /paradoxarena/public/cadastro');
             exit;
         }
         
-        // Função para validar CPF
+        // Função para validar CPF (você pode mantê-la aqui ou mover para um helper)
         function validarCPF($cpf) {
             $cpf = preg_replace('/\D/', '', $cpf);
             if (strlen($cpf) != 11 || preg_match('/(\d)\1{10}/', $cpf)) {
@@ -43,7 +45,7 @@ class AuthController {
         
         // Função para formatar data de nascimento
         function formatarDataNascimento($data) {
-            $dateObj = DateTime::createFromFormat('Y-m-d', $data);
+            $dateObj = \DateTime::createFromFormat('Y-m-d', $data);
             return $dateObj ? $dateObj->format('d/m/Y') : "Data inválida";
         }
         
@@ -58,45 +60,61 @@ class AuthController {
         $dataFormatada = formatarDataNascimento($data_nascimento);
         $genero = $_POST['genero'];
         $chave = trim($_POST['chave']);
+        $termos = isset($_POST['termos']) ? 1 : 0;
+        $tipodechave = trim($_POST['tipodechave']);
+
+        
+        // Array para acumular erros
+        $erros = [];
         
         // Verifica se todos os campos obrigatórios foram preenchidos
-        if (!$nome_completo || !$email || !$nickname || !$cpf || !$senha || !$confirmar_senha || !$data_nascimento || !$genero || !$chave) {
-            die("Erro: Todos os campos obrigatórios devem ser preenchidos.");
+        if (!$nome_completo || !$email || !$nickname || !$cpf || !$senha || !$confirmar_senha || !$data_nascimento || !$genero || !$chave || !$termos) {
+            $erros[] = "Erro: Todos os campos obrigatórios devem ser preenchidos.";
         }
         
         // Validação do CPF
         if (!validarCPF($cpf)) {
-            die("Erro: CPF inválido.");
+            $erros[] = "Erro: CPF inválido.";
         }
         
         // Verificação de senha e confirmação
         if ($senha !== $confirmar_senha) {
-            die("Erro: As senhas não coincidem.");
+            $erros[] = "Erro: As senhas não coincidem.";
         }
         
-        // Hash da senha
-        $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
-        
         // Verifica se o usuário tem 18 anos ou mais
-        $hoje = new DateTime();
-        $dataNascimento = new DateTime($data_nascimento);
-        $idade = $hoje->diff($dataNascimento)->y;
+        $hoje = new \DateTime();
+        $dataNascimentoObj = new \DateTime($data_nascimento);
+        $idade = $hoje->diff($dataNascimentoObj)->y;
         if ($idade < 18) {
-            die("Erro: Você deve ter pelo menos 18 anos para se cadastrar.");
+            $erros[] = "Erro: Você deve ter pelo menos 18 anos para se cadastrar.";
+        }
+        
+        // Se houver erros, armazene-os na sessão e redirecione de volta para o formulário
+        if (!empty($erros)) {
+            $_SESSION['erros'] = $erros;
+            header('Location: /paradoxarena/public/cadastro');
+            exit;
         }
         
         // Conecta ao banco de dados
-        $pdo = (new Database())->connect();
+        $pdo = (new \Database())->connect();
         
         // Cria instância do model de usuário
-        $userModel = new User($pdo);
+        $userModel = new \User($pdo);
         
         // Verifica se o e-mail ou CPF já estão cadastrados
         if ($userModel->findByEmail($email)) {
-            die("Erro: Este e-mail já está cadastrado.");
+            $_SESSION['erros'] = ["Erro: Este e-mail já está cadastrado."];
+            header('Location: /paradoxarena/public/cadastro');
+
+            exit;
         }
         if ($userModel->findByCPF($cpf)) {
-            die("Erro: Este CPF já está cadastrado.");
+            $_SESSION['erros'] = ["Erros: Este CPF já está cadastrado."];
+            header('Location: /paradoxarena/public/cadastro');
+
+            exit;
         }
         
         // Dados para inserção
@@ -105,40 +123,46 @@ class AuthController {
             'email'           => $email,
             'nickname'        => $nickname,
             'cpf'             => $cpf,
-            'senha'           => $senha_hash,
+            'senha'           => password_hash($senha, PASSWORD_DEFAULT),
             'data_nascimento' => $dataFormatada,
-            'genero'          => $genero
+            'genero'          => $genero,
+            'termos'          => $termos
         ];
         
         // Insere o usuário no banco
         if (!$userModel->create($userData)) {
-            die("Erro: Não foi possível cadastrar o usuário.");
+            $_SESSION['erros'] = ["Erro: Não foi possível cadastrar o usuário."];
+            header('Location: /paradoxarena/public/cadastro');
+
+            exit;
         }
         
         // Pega o ID do usuário recém-inserido
         $user_id = $pdo->lastInsertId();
         
-        // Insere a chave de pagamento (Pix) na tabela correspondente
-        $stmt = $pdo->prepare("INSERT INTO chaves_de_pagamento (chave, user_id) VALUES (:chave, :user_id)");
-        $stmt->execute([
-            'chave'   => $chave,
-            'user_id' => $user_id
-        ]);
+        // Insere a chave de pagamento usando o model
+        if (!$userModel->insertPaymentKey($user_id, $chave, $tipodechave)) {
+            $_SESSION['erros'] = ["Erro: Erro ao inserir a chave de pagamento."];
+            header('Location: /paradoxarena/public/cadastro');
+
+            exit;
+        }
         
         // Gera um token único para verificação do e-mail
         $token = $cpf . bin2hex(random_bytes(32));
-        $expira_em = (new DateTime('+10 minutes'))->format('Y-m-d H:i:s');
-        $stmt = $pdo->prepare("INSERT INTO usuario_tokens (user_id, token, expira_em) VALUES (:user_id, :token, :expira_em)");
-        $stmt->execute([
-            'user_id'  => $user_id,
-            'token'    => $token,
-            'expira_em'=> $expira_em
-        ]);
+        $expira_em = (new \DateTime('+10 minutes'))->format('Y-m-d H:i:s');
         
-        // Envia o e-mail de verificação
-        $emailService = new EmailService();
+        // Insere o token usando o model
+        if (!$userModel->insertUserToken($user_id, $token, $expira_em)) {
+            $_SESSION['erros'] = ["Erro: Erro ao inserir o token."];
+            header('Location: /paradoxarena/public/cadastro');
+            exit;
+        }
+        
+        // Envia o e-mail de verificação usando o serviço de email
+        $emailService = new \EmailService();
         $subject = "Verificação de email";
-        $link = "https://1270-143-202-224-19.ngrok-free.app/apostasonline/controllers/auth/validar_email.php?token=" . $token;
+        $link = "https://seu-dominio.com/controllers/auth/validar_email.php?token=" . $token;
         $body = '<!DOCTYPE html>
     <html lang="pt">
     <head>
@@ -241,10 +265,16 @@ class AuthController {
         </div>
     </body>
 </html';
+        
         if ($emailService->sendEmail($email, $subject, $body)) {
-            echo "Email enviado com sucesso!";
+            // Mensagem de sucesso (você pode também armazenar na sessão e redirecionar para uma página de sucesso)
+            $_SESSION['sucesso'] = "Sucesso: Cadastro realizado com sucesso! Verifique seu email para ativar sua conta!.";
+            header('Location: /paradoxarena/public/cadastro');
+            exit;
         } else {
-            echo "Erro ao enviar o email.";
-}
+            $_SESSION['erros'] = ["Erro: Erro ao enviar o email."];
+            header('Location: /paradoxarena/public/cadastro');
+            exit;
+        }
     }
 }

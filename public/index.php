@@ -21,39 +21,62 @@ if ($requestUri === '') {
     $requestUri = '/';
 }
 
+function groupRoutes($prefix, $routes) {
+    $grouped = [];
+    foreach ($routes as $route => $action) {
+        // Garante que o prefixo comece com "/" e não termine com "/"
+        $prefix = '/' . trim($prefix, '/');
+        $route  = '/' . ltrim($route, '/');
+        $grouped[$prefix . $route] = $action;
+    }
+    return $grouped;
+}
+
 // Define as rotas da aplicação
+$adminRoutes = groupRoutes('/admin', [
+    '/dashboard' => 'Admin/DashboardController@index',
+    '/users'     => 'Admin/UserController@index',
+]);
+
+// Suponha que suas rotas padrão já estejam definidas:
 $routes = [
     '/'         => 'HomeController@index',
-    '/login'    => 'AuthController@login',
-    '/cadastro' => 'AuthController@exibirCadastro',
-    '/registrar'=> 'AuthController@cadastrarUsuario',
-    // Outras rotas...
+    '/login'    => 'Auth/LoginController@login',
+    '/cadastro' => 'Auth/CadastroController@exibirCadastro',
+    '/registrar'=> 'Auth/CadastroController@cadastrarUsuario',
 ];
+
+// Mescla as rotas:
+$routes = array_merge($routes, $adminRoutes);
 
 // Processamento das rotas
 if (array_key_exists($requestUri, $routes)) {
-    list($controllerName, $action) = explode('@', $routes[$requestUri]);
-    $controllerPath = __DIR__ . '/../controllers/' . $controllerName . '.php';
-
+    list($controllerRoute, $action) = explode('@', $routes[$requestUri]);
+    // Constrói o caminho completo do arquivo do controller
+    $controllerPath = __DIR__ . '/../controllers/' . $controllerRoute . '.php';
+    
+    // Extrai apenas o nome da classe (basename), removendo diretórios
+    $className = basename($controllerRoute);
+    
     if (file_exists($controllerPath)) {
         require_once $controllerPath;
-        if (class_exists($controllerName)) {
-            $controller = new $controllerName();
+        if (class_exists($className)) {
+            $controller = new $className();
             if (method_exists($controller, $action)) {
                 call_user_func([$controller, $action]);
             } else {
                 header("HTTP/1.0 404 Not Found");
-                echo "Método '{$action}' não encontrado no controller '{$controllerName}'.";
+                echo "Método '{$action}' não encontrado no controller '{$className}'.";
             }
         } else {
             header("HTTP/1.0 404 Not Found");
-            echo "Controller '{$controllerName}' não definido.";
+            echo "Controller '{$className}' não definido.";
         }
     } else {
         header("HTTP/1.0 404 Not Found");
-        echo "Arquivo do controller '{$controllerName}' não encontrado.";
+        echo "Arquivo do controller '{$controllerPath}' não encontrado.";
     }
 } else {
     header("HTTP/1.0 404 Not Found");
-    require_once '../views/404.php';
+    require_once '../views/error/404.php';
 }

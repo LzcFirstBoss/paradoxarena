@@ -14,7 +14,7 @@
                 <h1>Bem vindo a <span class="rainbow">Paradox Arena!</span></h1>
             </div>
             <div class="form">
-                <form action="">
+                <form action="POST">
                     <div>
                         <input type="text" placeholder="CPF/EMAIL">
                     </div>

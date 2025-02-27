@@ -115,7 +115,7 @@ form input::placeholder{
     color: rgb(66, 66, 255);
 }
 
-#genero{
+.select{
     width: 100%;
     text-align: center;
     border: none;
@@ -128,6 +128,8 @@ form input::placeholder{
     color: white;
     -webkit-appearance: none;
     text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
 } 
 
 .button button{
@@ -165,6 +167,52 @@ form input::placeholder{
     font-weight: bolder;
     font-family: "Montserrat", serif;
 }
+
+.alert-danger{
+    margin-top: 20px;
+    color: #721c24;
+    background-color: #f8d7da;
+    font-family: "Montserrat", serif;
+    font-weight: bolder;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    border: solid 1px #f5c6cb;
+}
+
+.alert-success{
+    margin-top: 20px;
+    color: #155724;
+    background-color: #d4edda;
+    font-family: "Montserrat", serif;
+    text-align: LEFT;
+    padding: 5PX;
+    border: solid 3px #c3e6cb;
+    border-radius: 5px;
+}
+
+.button button.loading {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+  /* Estilo do spinner */
+  .spinner {
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #1f1f1f;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 8px;
+  }
+
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 
 @keyframes rainbow-animation {
     to {

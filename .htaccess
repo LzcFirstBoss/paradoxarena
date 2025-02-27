@@ -1,0 +1,5 @@
+RewriteEngine On
+
+# Se a URL não começar com /paradoxarena/public/, redireciona para a pasta public
+RewriteCond %{REQUEST_URI} !^/paradoxarena/public/
+RewriteRule ^(.*)$ /paradoxarena/public/$1 [L,R=301]
