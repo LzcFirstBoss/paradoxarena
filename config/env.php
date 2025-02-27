@@ -45,7 +45,7 @@ function carregarEnv($caminhoEnv) {
 
 // Defina o caminho para o arquivo .env
 // Exemplo: se este arquivo estiver em /config/env.php e o .env na raiz do projeto
-$envFilePath = __DIR__ . '/../../.env';
+$envFilePath = __DIR__ . '/../.env';
 
 carregarEnv($envFilePath);
 ?>
