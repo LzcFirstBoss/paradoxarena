@@ -141,4 +141,5 @@ cpfInput.addEventListener('input', function() {
       
       // Inicializa os valores e placeholder
       updatePlaceholderAndFormat(); 
+
   

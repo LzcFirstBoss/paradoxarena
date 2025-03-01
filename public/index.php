@@ -21,33 +21,40 @@ if ($requestUri === '') {
     $requestUri = '/';
 }
 
-function groupRoutes($prefix, $routes) {
+function groupRoutes($urlPrefix, $controllerPrefix, $routes) {
     $grouped = [];
+    // Garante que o prefixo da URL comece com "/" e não tenha barra final
+    $urlPrefix = '/' . trim($urlPrefix, '/');
+    if ($urlPrefix === '/') {
+        $urlPrefix = ''; // Se for apenas "/", deixa vazio para não duplicar barras
+    }
+    
     foreach ($routes as $route => $action) {
-        // Garante que o prefixo comece com "/" e não termine com "/"
-        $prefix = '/' . trim($prefix, '/');
-        $route  = '/' . ltrim($route, '/');
-        $grouped[$prefix . $route] = $action;
+        // Garante que a rota comece com "/"
+        $route = '/' . ltrim($route, '/');
+        // Monta a rota completa e adiciona o prefixo do controller à ação
+        $grouped[$urlPrefix . $route] = $controllerPrefix . $action;
     }
     return $grouped;
 }
 
-// Define as rotas da aplicação
-$adminRoutes = groupRoutes('/admin', [
-    '/dashboard' => 'Admin/DashboardController@index',
-    '/users'     => 'Admin/UserController@index',
+// Rotas para o módulo Auth: URL sem prefixo, mas controllers com prefixo "Auth/"
+$authRoutes = groupRoutes('', 'Auth/', [
+    '/login'         => 'LoginController@login',
+    '/cadastro'      => 'CadastroController@exibirCadastro',
+    '/registrar'     => 'CadastroController@cadastrarUsuario',
+    '/validar-email' => 'ValidarEmailController@validate',
+    '/codigo'            => 'TwoFactorController@validate',
 ]);
 
-// Suponha que suas rotas padrão já estejam definidas:
-$routes = [
-    '/'         => 'HomeController@index',
-    '/login'    => 'Auth/LoginController@login',
-    '/cadastro' => 'Auth/CadastroController@exibirCadastro',
-    '/registrar'=> 'Auth/CadastroController@cadastrarUsuario',
+// Rotas da raiz
+$rootRoutes = [
+    '/' => 'HomeController@index',
 ];
 
-// Mescla as rotas:
-$routes = array_merge($routes, $adminRoutes);
+// Mescla todas as rotas
+$routes = array_merge($rootRoutes, $authRoutes);
+
 
 // Processamento das rotas
 if (array_key_exists($requestUri, $routes)) {
