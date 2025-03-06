@@ -35,7 +35,7 @@
     
             <div class="footer_menu nav">
                 <div class="links_footer">
-                    <a href="" id="logout"><span class="material-symbols-outlined">logout</span> Sair</a>
+                    <a href="/paradoxarena/public/logout" id="logout"><span class="material-symbols-outlined">logout</span> Sair</a>
                 </div>
             </div>
     
@@ -55,14 +55,15 @@
                 </div>
             </div>
 
-        
-           <section class="main">
+                <div class="main">
+                <?php
+        // Exibe o conteúdo dinâmico se ele existir
+        if (isset($content)) {
+            echo $content;
+        }
+        ?>
 
-            <h1 style="color: white;">Apostas</h1>
-
-           </section>
-
-
+</div>
         </div>
     </div>
 

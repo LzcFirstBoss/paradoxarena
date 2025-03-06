@@ -5,6 +5,8 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+date_default_timezone_set('America/Sao_Paulo');
+
 class TwoFactorController {
     public function validate() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -53,7 +55,7 @@ class TwoFactorController {
             unset($_SESSION['codigo']);
 
             // Redireciona para a área protegida (por exemplo, a home)
-            header('Location: /paradoxarena/public/home');
+            header('Location: /paradoxarena/public/dashboard');
             exit;
         } else {
             // Se for GET, antes de exibir o formulário, verifica se a sessão 'codigo' existe

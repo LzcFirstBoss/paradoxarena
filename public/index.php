@@ -45,8 +45,13 @@ $authRoutes = groupRoutes('', 'Auth/', [
     '/registrar'     => 'CadastroController@cadastrarUsuario',
     '/validar-email' => 'ValidarEmailController@validate',
     '/codigo'        => 'TwoFactorController@validate',
+    '/logout'        => 'LoginController@logout',
 ]);
 
+$usuario = groupRoutes('', 'usuario/',[
+    '/dashboard' => 'DashBoardController@dashboard',
+]
+);
 
 //rotas para páginas staticas
 $staticRoutes = groupRoutes('', 'StaticPages/', [
@@ -56,7 +61,7 @@ $staticRoutes = groupRoutes('', 'StaticPages/', [
 
 
 // Mescla todas as rotas
-$routes = array_merge($authRoutes, $staticRoutes);
+$routes = array_merge($authRoutes, $staticRoutes, $usuario);
 
 
 // Processamento das rotas
