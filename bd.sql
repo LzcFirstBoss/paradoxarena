@@ -12,11 +12,12 @@ termos BOOLEAN DEFAULT FALSE,
 tag varchar(255)
 );
 
-create table chaves_de_pagamento(
+create table carteira(
 id  int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-chave varchar(100) NOT NULL,
+chave_pix varchar(100) NOT NULL,
 metodo varchar(3) DEFAULT 'PIX' NOT NULL,
-tipodechave varchar(20) NOT NULL,
+tipo_de_chave varchar(20) NOT NULL,
+saldo float NOT NULL default '00.00',
 user_id int NOT NULL,
 FOREIGN KEY (user_id) REFERENCES usuario(id)
 );
@@ -28,5 +29,4 @@ CREATE TABLE usuario_tokens (
   criado_em DATETIME DEFAULT CURRENT_TIMESTAMP,
   expira_em DATETIME,
   FOREIGN KEY (user_id) REFERENCES usuario(id) ON DELETE CASCADE
-)
-
+);

@@ -6,7 +6,7 @@
     <title>Verificação 2 fatores</title>
     <style>
     </style>
-        <link rel="stylesheet" href="../public/css/2aft.css">
+        <link rel="stylesheet" href="../public/css/auth/2aft.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
 </head>
 <body>

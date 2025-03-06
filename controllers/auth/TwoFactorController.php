@@ -22,9 +22,9 @@ class TwoFactorController {
                 exit;
             }
 
-            // Verifica se a sessão codigo existe
+            // Verifica se a sessão 'codigo' existe
             if (!isset($_SESSION['codigo'])) {
-                $_SESSION['erros'] = ["Erro: Sessão codigo expirou ou não foi iniciada."];
+                $_SESSION['erros'] = ["Erro: Sessão código expirou ou não foi iniciada."];
                 header('Location: /paradoxarena/public/login');
                 exit;
             }
@@ -52,9 +52,16 @@ class TwoFactorController {
             $_SESSION['usuario'] = $twoFactorData['user'];
             unset($_SESSION['codigo']);
 
-            echo "logado";
+            // Redireciona para a área protegida (por exemplo, a home)
+            header('Location: /paradoxarena/public/home');
+            exit;
         } else {
-            // Se não for POST, exibe o formulário de verificação codigo
+            // Se for GET, antes de exibir o formulário, verifica se a sessão 'codigo' existe
+            if (!isset($_SESSION['codigo'])) {
+                $_SESSION['erros'] = ["Erro: Sessão código expirou ou não foi iniciada."];
+                header('Location: /paradoxarena/public/login');
+                exit;
+            }
             require_once __DIR__ . '/../../views/auth/codigo.php';
         }
     }

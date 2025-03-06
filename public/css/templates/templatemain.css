@@ -1,0 +1,220 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+    *{
+        font-family: "Montserrat", serif;
+        margin: 0;
+    }
+    
+
+    :root{
+        --color-background: #1f1f1f;
+        --cor-paragrafo: #333;
+        --cor-paradox: #7ed957;
+        --cor-input: #252525;
+        --cor-inputplaceholder: #8a8a8a;
+    }
+
+    body{
+        background-color: var(--color-background);
+    }
+
+    .mainmenu{
+        display: flex;
+        gap: 20px;
+    }
+
+    .menu{
+        background-color: var(--color-background);
+        width: 300px;
+        height: 95vh;
+        margin-top: 20px;
+        margin-left: 10px;
+        border-radius: 20px;
+        box-shadow: 1px 1px 5px #000000;
+        position: relative;
+        transition: width 0.3s ease;
+    }
+
+    .menu.menu-closed {
+  width: 0;
+  overflow: hidden;
+}
+
+    .usuario{
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+        color: white;
+    }
+
+    .img_usuario img{
+        width: 50px;
+        border-radius: 30px;
+    }
+
+    .inf_usuario h2{
+        font-size: 13px;
+    }
+
+    .inf_usuario h3{
+        font-size: 10px;
+        color: rgb(190, 190, 190);
+    }
+
+    .nav{
+        padding-top: 30px;
+    }
+
+    .links{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .nav h4{
+        color: white;
+        text-decoration: underline;
+        padding-left: 25px;
+    }
+
+    .links a{
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: white;
+        font-weight: bolder;
+        padding-left: 25px;
+        gap: 10px;
+    }
+
+    .links a:hover{
+        border-left: solid 3px  var(--cor-paradox);
+        color: var(--cor-paradox);
+    }
+
+    #ativado{
+        border-left: solid 3px  var(--cor-paradox);
+        color: var(--cor-paradox);
+    }
+
+    .links_footer{
+        display: flex;
+        position: absolute;
+        top: 95%;
+        width: 100%;
+    }
+
+    .links_footer a{
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: white;
+        font-weight: bolder;
+        padding-left: 25px;
+        gap: 10px;
+    }
+
+    #logout:hover{
+        color: rgb(255, 111, 111);
+    }
+
+    .links_footer a:hover{
+        color: var(--cor-paradox);
+    }
+
+    .header_menu{
+        width: 82%;
+        background-color: var(--cor-input);
+        height: 8vh;
+        margin-top: 20px;
+        border-radius: 20px;
+        box-shadow: 1px 1px 5px #000000;
+    }
+
+    .mainheader{
+        height: 8vh;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #menu{
+        cursor: pointer;
+    }
+
+    #menu:hover{
+        color: black;
+    }
+
+    .icon{
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 15px;
+        color: var(--cor-paradox);
+        font-weight: bolder;
+    }
+
+    .paradox{
+        display: flex;
+        align-items: center;
+    }
+
+    .rainbow {
+    background: linear-gradient(90deg, #7ed957, #6cb94a, #0097b2, #0097b2, #0097b2, #7ed957, #7ed957);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbow-animation 2s linear infinite;
+  }
+
+  .carteira{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 30px;
+    color: white;
+    background-color: var(--color-background);
+    box-shadow: inset 1px 1px 5px  #000000;
+    font-size: 15px;
+    cursor: pointer;
+    gap: 10px;
+  }
+
+  .header_menu.header_menu-expanded {
+    width: 96%; /* Largura expandida */
+}
+
+    @keyframes rainbow-animation {
+    to {
+      background-position: 200% center;
+    }
+  }
+
+  /* Estilos para celulares pequenos */
+@media only screen and (max-width: 480px) {
+    .header_menu{
+        width: 100%;
+        margin-right: 20px;
+    }
+}
+
+/* Estilos para tablets */
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+  /* Regras CSS para tablets */
+}
+
+/* Estilos para desktops e dispositivos maiores */
+@media only screen and (min-width: 769px) {
+  /* Regras CSS para desktops */
+}
+
+#iconcarteira{
+    color: rgb(74, 251, 74);
+}
+
+#saldo{
+    color: white;
+    font-weight: 400;
+}

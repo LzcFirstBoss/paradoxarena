@@ -44,16 +44,19 @@ $authRoutes = groupRoutes('', 'Auth/', [
     '/cadastro'      => 'CadastroController@exibirCadastro',
     '/registrar'     => 'CadastroController@cadastrarUsuario',
     '/validar-email' => 'ValidarEmailController@validate',
-    '/codigo'            => 'TwoFactorController@validate',
+    '/codigo'        => 'TwoFactorController@validate',
 ]);
 
-// Rotas da raiz
-$rootRoutes = [
-    '/' => 'HomeController@index',
-];
+
+//rotas para páginas staticas
+$staticRoutes = groupRoutes('', 'StaticPages/', [
+    '/' => 'StaticPageController@home',
+    '/home' => 'StaticPageController@home'
+]);
+
 
 // Mescla todas as rotas
-$routes = array_merge($rootRoutes, $authRoutes);
+$routes = array_merge($authRoutes, $staticRoutes);
 
 
 // Processamento das rotas
