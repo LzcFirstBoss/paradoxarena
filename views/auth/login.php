@@ -22,6 +22,11 @@
                     session_start();
                 }
 
+                if (isset($_SESSION['aviso'])) {
+                    echo '<div class="alert alert-warning">' . $_SESSION['aviso'] . '</div>';
+                    unset($_SESSION['aviso']);
+                }
+
                 // Exibe as mensagens de erro, se houver
                 if (isset($_SESSION['erros']) && !empty($_SESSION['erros'])) {
                     echo '<div class="alert alert-danger">';

@@ -48,6 +48,12 @@ class User {
             'expira_em' => $expira_em
         ]);
     }
+
+    // Deleta o token após a verifcação
+    public function deleteUserToken($userId) {
+        $stmt = $this->pdo->prepare("DELETE FROM usuario_tokens WHERE user_id = :user_id");
+        return $stmt->execute(['user_id' => $userId]);
+    }    
     
     // Atualiza o usuário para marcar o e-mail como verificado
     public function markEmailVerified($user_id) {

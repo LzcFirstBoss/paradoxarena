@@ -41,6 +41,8 @@ main{
 .header_main p{
     color: var(--cor-paradox);
     text-decoration: underline;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .header_main h1{
@@ -172,6 +174,8 @@ form input::placeholder{
     padding: 10px;
     border-radius: 10px;
     border: solid 1px #f5c6cb;
+    max-width: 50%;
+    margin: 0 auto;
 }
 
 .alert-success{
@@ -183,6 +187,8 @@ form input::placeholder{
     padding: 5PX;
     border: solid 3px #c3e6cb;
     border-radius: 5px;
+    max-width: 50%;
+    margin: 0 auto;
 }
 
 .button button.loading {
@@ -213,3 +219,10 @@ form input::placeholder{
       background-position: 200% center;
     }
   }
+
+  @media only screen and (max-width: 600px) {
+    .alert-success{
+        max-width: 100%;
+        margin-top: 20px;
+    }
+   }

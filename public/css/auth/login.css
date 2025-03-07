@@ -76,7 +76,7 @@ form input::placeholder{
     cursor: pointer;
     position: absolute;
     top: 13px;
-    right: 15px;
+    right: 25px;
 }
 
 .checkbox{
@@ -151,6 +151,8 @@ form input::placeholder{
     padding: 10px;
     border-radius: 10px;
     border: solid 1px #f5c6cb;
+    max-width: 70%;
+    margin: 0 auto;
 }
 
 .alert-success{
@@ -162,6 +164,8 @@ form input::placeholder{
     padding: 5PX;
     border: solid 3px #c3e6cb;
     border-radius: 5px;
+    max-width: 70%;
+    margin: 0 auto;
 }
 
 .button button.loading {

@@ -7,8 +7,12 @@ if (session_status() == PHP_SESSION_NONE) {
 
 date_default_timezone_set('America/Sao_Paulo');
 
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../models/auth/user.php';
+
 class TwoFactorController {
     public function validate() {
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Se o código foi enviado como array (um dígito por input), concatena os dígitos
             if (isset($_POST['codigo']) && is_array($_POST['codigo'])) {
@@ -34,8 +38,8 @@ class TwoFactorController {
             $twoFactorData = $_SESSION['codigo'];
 
             // Verifica se o código expirou
-            $expiresAt = new DateTime($twoFactorData['expires_at']);
-            $now = new DateTime();
+            $expiresAt = new \DateTime($twoFactorData['expires_at'], new \DateTimeZone('America/Sao_Paulo'));
+            $now = new \DateTime('now', new \DateTimeZone('America/Sao_Paulo'));
             if ($now > $expiresAt) {
                 $_SESSION['erros'] = ["Erro: O código de verificação expirou. Por favor, faça login novamente."];
                 unset($_SESSION['codigo']);
@@ -52,9 +56,16 @@ class TwoFactorController {
 
             // Código verificado: finaliza o login e armazena o usuário na sessão
             $_SESSION['usuario'] = $twoFactorData['user'];
+
+            // Exclui o token do banco de dados após a validação bem-sucedida
+            $pdo = (new \Database())->connect();
+            $userModel = new \User($pdo);
+            $userModel->deleteUserToken($twoFactorData['user']['id']);
+
+            // Remove o token da sessão
             unset($_SESSION['codigo']);
 
-            // Redireciona para a área protegida (por exemplo, a home)
+            // Redireciona para a área protegida (por exemplo, a dashboard)
             header('Location: /paradoxarena/public/dashboard');
             exit;
         } else {

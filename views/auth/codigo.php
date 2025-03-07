@@ -35,9 +35,7 @@
 
                 // Exibe mensagem de sucesso, se houver
                 if (isset($_SESSION['sucesso'])) {
-                    echo '<div class="alert alert-success">';
-                    echo '<p>' . htmlspecialchars($_SESSION['sucesso']) . '</p>';
-                    echo '</div>';
+                    echo '<div class="alert alert-success"><p>' .($_SESSION['sucesso']) . '</p></div>';
                     unset($_SESSION['sucesso']);
                 }
                 ?>
