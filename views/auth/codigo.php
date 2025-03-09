@@ -26,7 +26,7 @@
                 if (isset($_SESSION['erros']) && !empty($_SESSION['erros'])) {
                     echo '<div class="alert alert-danger">';
                     foreach ($_SESSION['erros'] as $erro) {
-                        echo '<p>' . htmlspecialchars($erro) . '</p>';
+                        echo '<p>' . ($erro) . '</p>';
                     }
                     echo '</div>';
                     // Limpa as mensagens de erro após exibição

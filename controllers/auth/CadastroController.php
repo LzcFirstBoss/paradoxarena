@@ -76,6 +76,18 @@ class CadastroController {
         if (!validarCPF($cpf)) {
             $erros[] = "Erro: CPF inválido.";
         }
+
+        function isStrongPassword($password) {
+            // Funçãp: pelo menos 8 caracteres, uma letra maiúscula e um dígito
+            $pattern = '/^(?=.*[A-Z])(?=.*\d).{8,}$/';
+            return preg_match($pattern, $password);
+        }
+        
+        // Verificação se existe letra maiscula e numero
+        if (!isStrongPassword($senha)) {
+            $erros[] = "Erro: A senha deve ter pelo menos 8 caracteres, uma letra maiúscula e um número.";
+        }
+
         
         // Verificação de senha e confirmação
         if ($senha !== $confirmar_senha) {

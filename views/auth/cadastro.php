@@ -59,7 +59,7 @@
                                 <select name="genero" class="select" required>
                                     <option value="">SELECIONE</option>
                                     <option value="M">MASCULINO</option>
-                                    <option value="F">FÊMENINO</option>
+                                    <option value="F">FEMININO</option>
                                 </select>
                             </div>
                             <div class="inputs">

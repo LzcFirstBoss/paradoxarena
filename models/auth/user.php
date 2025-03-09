@@ -7,6 +7,14 @@ class User {
     public function __construct($pdo) {
         $this->pdo = $pdo;
     }
+
+    
+    // Busca todos dados do usuario na tabela usuario
+    public function findById($id) {
+        $stmt = $this->pdo->prepare("SELECT * FROM usuario WHERE id = :id");
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
     
     public function findByEmail($email) {
         $stmt = $this->pdo->prepare("SELECT * FROM usuario WHERE email = :email");
@@ -48,6 +56,7 @@ class User {
             'expira_em' => $expira_em
         ]);
     }
+    
 
     // Deleta o token após a verifcação
     public function deleteUserToken($userId) {
