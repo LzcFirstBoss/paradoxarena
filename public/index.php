@@ -49,7 +49,7 @@ $authRoutes = groupRoutes('', 'Auth/', [
 ]);
 
 $usuario = groupRoutes('', 'usuario/',[
-    '/dashboard' => 'DashBoardController@dashboard',
+    '/dashboard' => 'DashBoardController@index',
 ]
 );
 

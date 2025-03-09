@@ -11,14 +11,13 @@
 
     <div class="mainmenu">
         <div class="menu">
-
             <div class="usuario">
                 <div class="img_usuario">
                     <img src="/paradoxarena/public/img/teste.jpg" alt="">
                 </div>
                 <div class="inf_usuario">
-                    <h2>Luyz Phellype Carnot Peres</h2>
-                    <h3>Luyzpim1010@gmail.com</h3>
+                    <h2><?php echo htmlspecialchars($_SESSION['usuario']['nome_completo']);?></h2>
+                    <h3><?php echo htmlspecialchars($_SESSION['usuario']['email']);?></h3>
                 </div>
             </div>
     
@@ -26,10 +25,10 @@
                 <h4>Paginas</h4>
                 <div class="links">
                     <a href="" id="ativado"><span class="material-symbols-outlined">home</span> Inicio</a>
-                    <a href=""><span class="material-symbols-outlined">crown</span> Rank</a>
+                    <a href=""><span class="material-symbols-outlined">paid</span>Apostados</a>
                     <a href=""><span class="material-symbols-outlined">swords</span> Camps</a>
+                    <a href=""><span class="material-symbols-outlined">crown</span> Rank</a>
                     <a href=""><span class="material-symbols-outlined">history</span> Historico</a>
-                    <a href=""><span class="material-symbols-outlined">settings</span> Configuração</a>
                 </div>
             </div>
     
@@ -38,35 +37,39 @@
                     <a href="/paradoxarena/public/logout" id="logout"><span class="material-symbols-outlined">logout</span> Sair</a>
                 </div>
             </div>
-    
         </div>
 
         <div class="header_menu">
             <div class="mainheader">
-                <div class="icon">
-                    <span class="material-symbols-outlined rainbow" id="menu">menu</span>
+                <div class="usuariomobile usermobile">
+                    <div class="img_usuario">
+                        <img src="/paradoxarena/public/img/teste.jpg" alt="">
+                    </div>
+                    <div class="inf_usuario">
+                        <h2><?php echo htmlspecialchars($_SESSION['usuario']['nome_completo']);?></h2>
+                        <h3><?php echo htmlspecialchars($_SESSION['usuario']['email']);?></h3>
+                    </div>
                 </div>
                 <div class="icon">
                     <p class="rainbow paradox"><span class="material-symbols-outlined" id="iconswords">swords</span> Paradox Arena</p>
                     <div class="carteira">
                         <span class="material-symbols-outlined" id="iconcarteira">account_balance_wallet</span>
-                        <p id="saldo"> $00.00</p>
+                        <p id="saldo">R$<?php echo number_format($walletBalance, 2, ',', '.'); ?></p>
                     </div>
+                    <a href="" id="configs"><span class="material-symbols-outlined">settings</span></a>
                 </div>
             </div>
-
-                <div class="main">
-                <?php
+            <div class="main">
+            <?php
         // Exibe o conteúdo dinâmico se ele existir
         if (isset($content)) {
             echo $content;
         }
         ?>
-
-</div>
+            </div>
         </div>
+        
     </div>
 
 </body>
 </html>
-<script src="/paradoxarena/public/script/templates/header.js"></script>
