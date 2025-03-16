@@ -50,6 +50,7 @@ $authRoutes = groupRoutes('', 'Auth/', [
 
 $usuario = groupRoutes('', 'usuario/',[
     '/dashboard' => 'DashBoardController@index',
+    '/apostados' => 'ApostaController@index',
 ]
 );
 

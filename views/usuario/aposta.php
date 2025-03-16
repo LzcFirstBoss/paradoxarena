@@ -1,14 +1,17 @@
 <?php
 include_once __DIR__ . '/../../helpers/protectuser.php';
 requireAuth();
-$activePage = 'dashboard';
+$activePage = 'apostados';
 
 // Inicia o buffer de saída
 ob_start();
 ?>
 
 <!-- inicio html -->
-<h2><?php echo htmlspecialchars($_SESSION['usuario']['nome_completo']);?></h2>
+
+<div class="apostar">
+    <button>criar aposta</button>
+</div>
 
 <!--fim html -->
 

@@ -10,7 +10,7 @@ require_once __DIR__ . '/../config/env.php';
 
 
 
-class EmailService {
+class EmailService { 
     private $mailer;
 
     public function __construct() {
