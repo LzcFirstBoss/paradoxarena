@@ -51,13 +51,14 @@ $authRoutes = groupRoutes('', 'Auth/', [
 $usuario = groupRoutes('', 'usuario/',[
     '/dashboard' => 'DashBoardController@index',
     '/apostados' => 'ApostaController@index',
+    '/teste' => 'TesteController@pagarQRCodePix'
 ]
 );
 
 //rotas para páginas staticas
 $staticRoutes = groupRoutes('', 'StaticPages/', [
     '/' => 'StaticPageController@home',
-    '/home' => 'StaticPageController@home'
+    '/home' => 'StaticPageController@home',
 ]);
 
 
