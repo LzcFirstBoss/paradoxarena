@@ -1,5 +1,4 @@
 <?php
-// models/auth/user.php
 
 class User {
     private $pdo;
@@ -45,6 +44,12 @@ class User {
             'user_id'    => $user_id,
             'tipo_de_chave'=> $tipodechave
         ]);
+    }
+
+    public function getWalletData($userId) {
+        $stmt = $this->pdo->prepare("SELECT * FROM carteira WHERE user_id = :user_id");
+        $stmt->execute(['user_id' => $userId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC); // Retorna os dados da carteira
     }
     
     // Insere o token de verificação do e-mail

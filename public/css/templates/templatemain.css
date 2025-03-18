@@ -174,6 +174,10 @@
     gap: 10px;
   }
 
+  #carteira{
+    text-decoration: none;
+  }
+
   .header_menu.header_menu-expanded {
     width: 96%; /* Largura expandida */
 }
@@ -369,7 +373,8 @@
 }
 
 #iconcarteira{
-    color: rgb(74, 251, 74);
+    color: rgb(21 128 61);
+    font-size: 1.875rem;
 }
 
 #saldo{

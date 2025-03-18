@@ -8,7 +8,7 @@ ob_start();
 ?>
 
 <!-- inicio html -->
-<h2><?php echo htmlspecialchars($_SESSION['usuario']['nome_completo']);?></h2>
+<h2></h2>
 
 <!--fim html -->
 

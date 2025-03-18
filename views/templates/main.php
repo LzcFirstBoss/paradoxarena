@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="../public/css/templates/templatemain.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <?php if (isset($customCSS)): ?>
+        <link rel="stylesheet" href="<?php echo $customCSS; ?>">
+    <?php endif; ?>
 </head>
 <body>
 
@@ -17,8 +20,8 @@
                     <img src="/paradoxarena/public/img/teste.jpg" alt="">
                 </div>
                 <div class="inf_usuario">
-                    <h2><?php echo htmlspecialchars($_SESSION['usuario']['nome_completo']);?></h2>
-                    <h3><?php echo htmlspecialchars($_SESSION['usuario']['email']);?></h3>
+                    <h2><?php echo htmlspecialchars($userData['nome_completo']); ?></h2>
+                    <h3><?php echo htmlspecialchars($userData['email']); ?></h3>
                 </div>
             </div>
     
@@ -31,11 +34,11 @@
                     <a href="/paradoxarena/public/apostados" <?php echo (isset($activePage) && $activePage === 'apostados') ? 'id="ativado"' : ''; ?>>
                         <span class="material-symbols-outlined" translate="no">paid</span> Apostados
                     </a>
-                    <a href="/paradoxarena/public/camps" <?php echo (isset($activePage) && $activePage === 'camps') ? 'id="ativado"' : ''; ?>>
-                        <span class="material-symbols-outlined" translate="no">swords</span> Camps
-                    </a>
                     <a href="/paradoxarena/public/rank" <?php echo (isset($activePage) && $activePage === 'rank') ? 'id="ativado"' : ''; ?>>
                         <span class="material-symbols-outlined" translate="no">crown</span> Rank
+                    </a>
+                    <a href="/paradoxarena/public/carteira" <?php echo (isset($activePage) && $activePage === 'deposito') ? 'id="ativado"' : ''; ?>>
+                    <span class="material-symbols-outlined">currency_exchange</span> Depositar
                     </a>
                     <a href="/paradoxarena/public/historico" <?php echo (isset($activePage) && $activePage === 'historico') ? 'id="ativado"' : ''; ?>>
                         <span class="material-symbols-outlined" translate="no">history</span> Historico
@@ -57,16 +60,18 @@
                         <img src="/paradoxarena/public/img/teste.jpg" alt="">
                     </div>
                     <div class="inf_usuario">
-                        <h2><?php echo htmlspecialchars($_SESSION['usuario']['nome_completo']);?></h2>
-                        <h3><?php echo htmlspecialchars($_SESSION['usuario']['email']);?></h3>
+                        <h2><?php echo htmlspecialchars($userData['nome_completo']); ?></h2>
+                        <h3><?php echo htmlspecialchars($userData['email']); ?></h3>
                     </div>
                 </div>
                 <div class="icon">
                     <p class="rainbow paradox"><span class="material-symbols-outlined" translate="no" id="iconswords">swords</span> Paradox Arena</p>
+                    <a href="/paradoxarena/public/carteira" id="carteira">
                     <div class="carteira">
-                        <span class="material-symbols-outlined" translate="no" id="iconcarteira">account_balance_wallet</span>
-                        <p id="saldo">R$<?php echo number_format($walletBalance, 2, ',', '.'); ?></p>
+                        <i class="bi bi-coin" id="iconcarteira"></i>
+                       <p id="saldo">R$<?php echo number_format($walletData['saldo'] ?? 0, 2, ',', '.'); ?></p>
                     </div>
+                    </a>
                     <a href="" id="configs"><span class="material-symbols-outlined" translate="no">settings</span></a>
                 </div>
             </div>

@@ -31,7 +31,7 @@
                 if (isset($_SESSION['erros']) && !empty($_SESSION['erros'])) {
                     echo '<div class="alert alert-danger">';
                     foreach ($_SESSION['erros'] as $erro) {
-                        echo '<p>' . htmlspecialchars($erro) . '</p>';
+                        echo '<p>' . ($erro) . '</p>';
                     }
                     echo '</div>';
                     // Limpa as mensagens de erro após exibição
@@ -41,7 +41,7 @@
                 // Exibe mensagem de sucesso, se houver
                 if (isset($_SESSION['sucesso'])) {
                     echo '<div class="alert alert-success">';
-                    echo '<p>' . htmlspecialchars($_SESSION['sucesso']) . '</p>';
+                    echo '<p>' . ($_SESSION['sucesso']) . '</p>';
                     echo '</div>';
                     unset($_SESSION['sucesso']);
                 }

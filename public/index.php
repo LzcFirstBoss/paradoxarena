@@ -48,10 +48,14 @@ $authRoutes = groupRoutes('', 'Auth/', [
     '/logout'        => 'LoginController@logout',
 ]);
 
+$carteira = groupRoutes('', 'Carteira/',[
+    '/carteira' => 'CarteiraController@index',
+    '/pagamentos' => 'PagamentosController@index',
+]);
+
 $usuario = groupRoutes('', 'usuario/',[
     '/dashboard' => 'DashBoardController@index',
     '/apostados' => 'ApostaController@index',
-    '/teste' => 'TesteController@pagarQRCodePix'
 ]
 );
 
@@ -63,7 +67,7 @@ $staticRoutes = groupRoutes('', 'StaticPages/', [
 
 
 // Mescla todas as rotas
-$routes = array_merge($authRoutes, $staticRoutes, $usuario);
+$routes = array_merge($authRoutes, $staticRoutes, $usuario, $carteira);
 
 
 // Processamento das rotas

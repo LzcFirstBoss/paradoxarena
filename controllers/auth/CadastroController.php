@@ -177,7 +177,7 @@ class CadastroController {
         
         if ($emailService->sendEmail($email, $subject, $body)) {
             $_SESSION['sucesso'] = "Sucesso: Cadastro realizado com sucesso! Verifique seu email para ativar sua conta!";
-            header('Location: /paradoxarena/public/cadastro');
+            header('Location: /paradoxarena/public/login');
             exit;
         } else {
             $_SESSION['erros'] = ["Erro: Erro ao enviar o email."];
